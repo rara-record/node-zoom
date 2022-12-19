@@ -15,6 +15,7 @@ const wss = new WebSocketServer({ server });
 
 
 wss.on("connection", (socket) => {
-  console.log(socket)
+  console.log('connected to browser ✔')
+  socket.send('hello world')
 })
 server.listen(3000, handleListen)
