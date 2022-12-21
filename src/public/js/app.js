@@ -6,19 +6,18 @@ socket.addEventListener('open', () => {
   console.log('connected to server ✔')
 })
 
-socket.addEventListener('message', (message)=> {
-  console.log(message.data, 'from to the server')
-})
+async function handleMessage(event) {
+  const message = await event.data.text();
+  console.log(message)
+}
 
-socket.addEventListener("close",  () => {
-  console.log('connected from server ❌')
-})
+socket.addEventListener("message", handleMessage)
 
-const handleSubmit = (e) => {
-  e.preventDefault();
+function handleSubmit(event) {
+  event.preventDefault();
   const input = messageForm.querySelector("input");
   socket.send(input.value);
   input.value = "";
 }
 
-messageForm.addEventListener('submit', handleSubmit)
+messageForm.addEventListener("submit", handleSubmit);
