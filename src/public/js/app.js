@@ -1,17 +1,19 @@
 const socket = new WebSocket(`ws://${window.location.host}`);
 const messageList = document.querySelector("ul");
-const messageForm = document.querySelector("form");
+const nickForm = document.querySelector("#nick");
+const messageForm = document.querySelector('#message');
 
 socket.addEventListener('open', () => {
   console.log('connected to server ✔')
 })
 
-async function handleMessage(event) {
-  const message = await event.data.text();
-  console.log(message)
-}
 
-socket.addEventListener("message", handleMessage)
+socket.addEventListener("message", (message) => {
+  console.log('new message', message.data)
+  const li = document.createElement('li')
+  li.innerText = message.data
+  messageList.append(li)
+})
 
 function handleSubmit(event) {
   event.preventDefault();
